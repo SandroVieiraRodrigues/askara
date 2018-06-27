@@ -52,3 +52,6 @@ bower install
 ```bash
 electron .
 ```
+# Licença
+
+O código do **Askara** é livre para uso, e está sob a licença [MIT](https://opensource.org/licenses/MIT). 

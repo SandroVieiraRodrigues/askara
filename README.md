@@ -1,10 +1,11 @@
+
 # Introdução
 
 ADDLM (Askara DLL Manager): Sistema para Controle e Versionamento de Operações DDL Realizadas no SGBD Oracle MySQL com Foco no Desenvolvedor.
 
 O Askara, é uma **ferramenta de gerenciamento de banco de dados** multiplataforma desenvolvida em [ElectronJs](https://electronjs.org/) que tem como principal característica a funcionalidade de versionar o esquema  ([DDL](https://en.wikipedia.org/wiki/Data_definition_language)) dos bancos de dados operados em binários e sincronizá-los com um repositório GIT.
 
-Foi desenvolvida como trabalho de conclusão para a disciplina de graduação **Bacharelado em Sistemas de Informação** pela **Pontifícia Universidade Católica de Minas Gerais**, em Betim. Sendo, seus desenvolvedores:
+Foi desenvolvido como trabalho de conclusão para a disciplina de graduação **Bacharelado em Sistemas de Informação** pela **Pontifícia Universidade Católica de Minas Gerais**, em Betim. Sendo, seus desenvolvedores:
 
  - Rodrigo Júnior de Assis (https://github.com/rodrigojrkall)
  - Sandro Vieira Rodrigues (https://github.com/SandroVieiraRodrigues)
@@ -13,6 +14,13 @@ E orientador do TCC:
 
  - Alisson Rabelo Arantes (http://lattes.cnpq.br/5671565929117484)
 
+A versão atual da aplicação contempla:
+
+
+ - Suporte a bancos de dados [MySql](https://www.mysql.com/)
+ - Interface de usuário simples com possibilidade de execução de scripts, exportação dos dados de retorno de uma consulta no formato [CSV](https://pt.wikipedia.org/wiki/Comma-separated_values), e a configuração das conexões a bancos de dados e repositórios GIT.
+ - Geração automática de binários que refletem a versão do esquema dos bancos de dados monitorados, e registro destes em servidor GIT, a partir  do monitoramento de scripts executados que contenham comandos [DDL](https://pt.wikipedia.org/wiki/Linguagem_de_defini%C3%A7%C3%A3o_de_dados).
+ 
 # Instalação
 
 Para instalação, é necessário que tenha as seguintes aplicações/ferramentas instaladas no sistema:

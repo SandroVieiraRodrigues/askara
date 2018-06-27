@@ -1,0 +1,85 @@
+.grid {
+    width: 100%;
+    height: 100%;
+}
+
+.buttonloader {
+    border: 3px solid #f3f3f3;
+    /* Light grey */
+    border-top: 3px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 100) !important;
+}
+
+.dropdown :hover {
+    color: rgba(255, 255, 255, 255) !important;
+}
+
+.returnGrid {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 300px;
+    border-top: 1px solid;
+    border-color: darkgray;
+    overflow-y: auto !important;
+}
+
+
+.statusBar {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    background-color: lightgrey;
+
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: #007bff;
+}
+
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width:1200px;
+    }
+}
+
+.loadingAlert{
+    white-space: nowrap !important;
+    display: inline !important;
+}
+
+.databaseConnectionField{
+    background-color: #ebf5f5;
+    border-radius: 5px;
+}
+
+.localSystemField{
+    background-color: #fff7e2;
+    border-radius: 5px;
+}
+
+.gitHubField{
+    background-color: #e6fde6;
+    border-radius: 5px;
+}

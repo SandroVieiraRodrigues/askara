@@ -1,0 +1,14 @@
+{
+  "name": "Askara",
+  "description": "Database Manager",
+  "main": "index.js",
+  "authors": [
+    "Askara Team"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "angular-ui-ace": "bower"
+  }
+}

@@ -1,0 +1,330 @@
+<div>
+    <div>
+        <!-- Barra de Menus -->
+        <nav class="navbar navbar-fixed-top navbar-expand-sm  navbar-dark  bg-primary">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="oi oi-folder"></span>
+                            Arquivo
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <!-- <a class="dropdown-item" href="#">
+                                <span class="oi oi-file"></span>&nbsp;Novo</a>
+                            <a class="dropdown-item" href="#">
+                                <span class="oi oi-folder"></span>&nbsp;Abrir</a>
+                            <hr/> -->
+                            <a class="dropdown-item" href="#" ng-click="vm.closeApplication()">
+                                <span class="oi oi-x"></span>&nbsp;Sair do Askara</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="oi oi-eye"></span>
+                            Visualizar
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a ng-click="vm.zoomIn()" class="dropdown-item" href="#">
+                                <span class="oi oi-zoom-in"></span>&nbsp;Aumentar Zoom</a>
+                            <a ng-click="vm.zoomOut()" class="dropdown-item" href="#">
+                                <span class="oi oi-zoom-out"></span>&nbsp;Diminuir Zoom</a>
+                            <a ng-click="vm.resetZoom()" class="dropdown-item" href="#">
+                                <span class="oi oi-reload"></span>&nbsp;Restaurar Zoom</a>
+                            <a ng-click="vm.toggleFullScreen()" class="dropdown-item" href="#">
+                                <span class="{{ (vm.isFullScreen()) ? 'oi oi-fullscreen-exit' : 'oi oi-fullscreen-enter' }}"></span>&nbsp;{{ (vm.isFullScreen()) ? 'Tela Normal' : 'Tela Cheia' }}</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link btn btn-default" ng-click="vm.openConfigurationModal()" aria-haspopup="true" aria-expanded="false">
+                            <span class="oi oi-wrench"></span>
+                            Configurações
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                Versão Alpha 1.0.0
+            </span>
+        </nav>
+        <!-- Barra de Status -->
+        <div style="background-color : light-gray">
+            <div class="container-fluid">
+                <a ng-disabled="vm.applicationStatus != 0" class="btn" ng-click="vm.performQuery()">
+                    <div ng-if="vm.applicationStatus == 0" class="row">
+                        <span class="oi oi-media-play"></span>
+                        &nbsp; Executar Consulta (F5)
+                    </div>
+
+                    <div ng-if="vm.applicationStatus == 1" class="row">
+
+                        <div style="width:20px; height:20px" class="buttonloader"></div>
+                        &nbsp;
+                        <b>
+                            Executando Consulta...
+                        </b>
+
+                    </div>
+
+                    <div ng-if="vm.applicationStatus == 2" class="row">
+
+                        <div style="width:20px; height:20px" class="buttonloader"></div>
+                        &nbsp;
+                        <b>
+                            Acessando GIT...
+                        </b>
+
+                    </div>
+
+                    <div ng-if="vm.applicationStatus == 3" class="row">
+
+                        <div style="width:20px; height:20px" class="buttonloader"></div>
+                        &nbsp;
+                        <b>
+                            Efetuando Backup Local do Esquema...
+                        </b>
+
+                    </div>
+
+                    <div ng-if="vm.applicationStatus == 4" class="row">
+
+                        <div style="width:20px; height:20px" class="buttonloader"></div>
+                        &nbsp;
+                        <b>
+                            Sincronizando Esquema com o GIT...
+                        </b>
+
+                    </div>
+                </a>
+
+                &nbsp; &nbsp;
+
+                <a ng-if="vm.queryData.length > 0" ng-click="vm.saveResults()" class="btn">
+                    <span class="oi oi-data-transfer-download"></span>
+                    &nbsp; Salvar Resultados
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor -->
+    <div>
+        <div id="aceEditor" ui-ace="vm.aceOptions"></div>
+    </div>
+    <!-- Grid de Retorno -->
+    <div class="returnGrid">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" id="resultsTab" href="#" data-target="#results" role="tab" data-toggle="tab">Resultado</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" id="messagesTab" href="#" data-target="#messages" role="tab" data-toggle="tab">Mensagens</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane returnTable" id="results">
+                <table class="table table-hover table-sm" id="resultsTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th ng-repeat="(key, val) in vm.queryData[0]">{{ key }}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="row in vm.queryData">
+                            <td ng-repeat="column in row">
+                                {{ column }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- <div ng-if="!vm.refreshTable" ui-i18n="en" id="grid1" ui-grid="vm.gridOptions" class="grid"></div> -->
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="messages">
+                {{vm.systemMessage}}
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal de Configurações -->
+    <div class="modal fade" id="modalConfiguration" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Configurações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="container-fluid">
+                        <div ng-show="vm.configurationDialog.error.show" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" ng-click="vm.configurationDialog.error.show = false" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Atenção!</strong> {{vm.configurationDialog.error.message}}
+                        </div>
+
+                        <div ng-show="vm.configurationDialog.loading" class="alert alert-info alert-dismissible fade show " role="alert">
+                            <div>
+                                <div style="width:20px; height:20px" class="buttonloader"></div>
+                            </div>
+
+                            <div>Efetuando conexão com o Banco</div>
+                        </div>
+
+                        <form novalidate>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>
+                                        <div class="form-group">
+                                            <h5>Conexão com Banco de Dados</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="databasetype" class="col-form-label">Tipo de Banco</label>
+                                            <select class="form-control" id="databasetype" ng-init="vm.configurationDialog.configurationData.databaseType = 0" ng-model="vm.configurationDialog.configurationData.databaseType"
+                                                ng-options="databaseType.code as databaseType.name for databaseType in vm.configurationDialog.databaseTypes">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="connection" class="col-form-label">Conexão</label>
+                                            <input type="text" ng-change="vm.connectionsConfigChanged()" ng-model="vm.configurationDialog.configurationData.connectionHost"
+                                                class="form-control" id="connection" placeholder="Endereço de Conexão">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login" class="col-form-label">Login</label>
+                                            <input type="text" ng-change="vm.connectionsConfigChanged()" ng-model="vm.configurationDialog.configurationData.connectionUser"
+                                                class="form-control" id="login" placeholder="Login de Conexão">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="col-form-label">Senha</label>
+                                            <input ng-change="vm.connectionsConfigChanged()" ng-model="vm.configurationDialog.configurationData.connectionPassword" type="password"
+                                                class="form-control" id="password" placeholder="Senha de Conexão">
+                                        </div>
+                                        <div class="form-group">
+                                            <div for="password" class="col-form-label"></div>
+                                            <button ng-click="vm.testDatabaseConnection()" ng-disabled="(!vm.configurationDialog.configurationData.connectionHost || !vm.configurationDialog.configurationData.connectionUser || !vm.configurationDialog.configurationData.connectionPassword )"
+                                                type="button" class="btn btn-primary">Validar Conexão</button>
+                                        </div>
+                                        <!-- <div ng-if="vm.configurationDialog.connectionValidated">
+                                                    
+                                                </div> -->
+                                        <div class="form-group">
+                                            <label for="mainDatabase" class="col-form-label">Banco Principal</label>
+                                            <select ng-disabled="!vm.configurationDialog.connectionValidated" class="form-control" id="mainDatabase" ng-model="vm.configurationDialog.configurationData.connectionDatabase" ng-options="database.name for database  in vm.configurationDialog.databases">
+                                                <option value="">Iniciar sem conexão a um Banco de Dados</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <h5>Backup de Esquema</h5>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-5">Ativar Backup</div>
+                                        <div class="col-sm-7">
+                                            <div class="form-check">
+                                                <input ng-model="vm.configurationDialog.configurationData.doBackup" class="form-check-input" type="checkbox">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-5">Bancos Monitorados</div>
+                                        <div class="col-sm-7">
+                                            <div ng-if="!vm.configurationDialog.databases || vm.configurationDialog.databases.length == 0">
+                                                Nenhum banco encontrado
+
+                                            </div>
+                                            <div class="form-check">
+                                                <div ng-repeat="database in vm.configurationDialog.databases">
+                                                    <input ng-disabled="!vm.configurationDialog.configurationData.doBackup" ng-model="database.monitored" class="form-check-input"
+                                                        type="checkbox" id="{{'databaseCheck' + $index}}">
+                                                    <label class="form-check-label" for="{{'databaseCheck' + $index}}">
+                                                        {{database.name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Backup em sistema local -->
+                                    <!-- <div class="localSystemField">
+                                        <div class="form-group row">
+                                            <div class="col-sm-5">Backup no Sitema Local</div>
+                                            <div class="col-sm-7">
+                                                <div class="form-check">
+                                                    <input ng-disabled="!vm.configurationDialog.configurationData.doBackup" ng-model="vm.configurationDialog.configurationData.backupOnFS" class="form-check-input" type="checkbox">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login" class="col-form-label">Diretório de Backup</label>
+                                            <input readonly type="text" class="form-control" ng-model="vm.configurationDialog.configurationData.fsBackupPath">
+                                        </div>
+                                        <div class="form-group">
+                                            <button ng-disabled="!vm.configurationDialog.configurationData.backupOnFS || !vm.configurationDialog.configurationData.doBackup" ng-click="vm.openChooseFSBackupFolderDialog()"
+                                                type="button" class="btn btn-primary">Escolher Caminho</button>
+
+                                        </div>
+
+
+                                    </div> -->
+
+                                    <!-- Backup em GitHub -->
+                                    <div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-5">Backup em GIT</div>
+                                            <div class="col-sm-7">
+                                                <div class="form-check">
+                                                    <input ng-disabled="!vm.configurationDialog.configurationData.doBackup" ng-model="vm.configurationDialog.configurationData.backupOnGit"
+                                                        class="form-check-input" type="checkbox">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login" class="col-form-label">Repositório</label>
+                                            <input type="text" ng-model="vm.configurationDialog.configurationData.gitRepository" ng-readonly="!vm.configurationDialog.configurationData.backupOnGit || !vm.configurationDialog.configurationData.doBackup"
+                                                class="form-control" id="login" placeholder="Endereço de acesso ao servidor GIT">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login" class="col-form-label">Usuário</label>
+                                            <input type="text" ng-model="vm.configurationDialog.configurationData.gitUser" ng-readonly="!vm.configurationDialog.configurationData.backupOnGit || !vm.configurationDialog.configurationData.doBackup"
+                                                class="form-control" id="login" placeholder="Usuário para conectar ao servidor GIT">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login" class="col-form-label">Senha</label>
+                                            <input ng-model="vm.configurationDialog.configurationData.gitPassword" ng-readonly="!vm.configurationDialog.configurationData.backupOnGit || !vm.configurationDialog.configurationData.doBackup"
+                                            type="password" class="form-control" id="login" placeholder="Senha para conectar ao servidor GIT">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="vm.saveConfigurations()" ng-disabled="!vm.canSaveConfigurations()" type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

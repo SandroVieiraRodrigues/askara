@@ -1,0 +1,2 @@
+# askara
+Askara DDL Manager
